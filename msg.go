@@ -62,9 +62,6 @@ func Recv(socket zmq.Socket) (*ZreMsg, error) {
 		return msg, err
 	}
 	frames := input.Frames
-	if frames == nil { // FIXME: until pull request zmq4
-		return msg, errors.New("empty message")
-	}
 	// If we're reading from a ROUTER socket, get routingID
 	if socket.Type() == zmq.Router {
 		msg.routingID = frames[0]
