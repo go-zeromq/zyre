@@ -178,7 +178,6 @@ func (n *node) start() error {
 
 // stop node discovery and interconnection
 func (n *node) stop() {
-
 	if n.beacon != nil {
 		b := &BeaconMsg{
 			Protocol: [...]byte{'Z', 'R', 'E'},
@@ -190,12 +189,6 @@ func (n *node) stop() {
 		n.beacon.Close()
 	}
 	n.beaconPort = 0
-
-	// clear peer tables
-	for peerID, peer := range n.peers {
-		peer.Disconnect()
-		delete(n.peers, peerID)
-	}
 	n.inbox.Close()
 }
 
@@ -523,6 +516,11 @@ func (n *node) actor() {
 			n.recvAPI(r)
 		case m, ok := <-n.msgs:
 			if !ok {
+				//	clear peer tables
+				for peerID, peer := range n.peers {
+					peer.Disconnect()
+					delete(n.peers, peerID)
+				}
 				return
 			}
 			n.recvPeer(m)
