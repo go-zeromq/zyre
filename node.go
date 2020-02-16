@@ -185,7 +185,7 @@ func (n *node) stop() {
 			UUID:     n.uuid,
 			Port:     0}
 		n.beacon.SetBeaconCmd(&Cmd{ID: "PUBLISH", Payload: b.pack()})
-		time.Sleep(1 * time.Millisecond) // Allow 1 msec for beacon to go out
+		time.Sleep(n.interval + 1*time.Millisecond) // FIXME
 		n.beacon.Close()
 	}
 	n.beaconPort = 0
