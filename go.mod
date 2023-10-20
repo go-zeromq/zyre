@@ -3,7 +3,7 @@ module github.com/go-zeromq/zyre
 go 1.19
 
 require (
-	github.com/go-zeromq/zmq4 v0.15.0
+	github.com/go-zeromq/zmq4 v0.16.0
 	golang.org/x/net v0.17.0
 )
 
